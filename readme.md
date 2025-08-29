@@ -36,8 +36,7 @@ docker/
 1. Установи и запусти **Docker Desktop** 🐳  
 2. Клонируй репозиторий:
    ```bash
-   git clone https://github.com/rwolfin/project.git
-   cd project
+   git clone https://github.com/rwolfin/docker.git
    ```
 3. Подними контейнеры:
    ```bash
