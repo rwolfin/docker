@@ -1,49 +1,48 @@
+version: '3.9'
+
 services:
   nginx:
-    build:
-      context: ./docker/nginx
+    build: ./nginx
     container_name: nginx_app
     ports:
       - "80:80"
     volumes:
-      - ./app:/var/www/html
-      - ./docker/nginx/default.conf:/etc/nginx/conf.d/default.conf
+      - ./src:/var/www/html
+      - ./nginx/default.conf:/etc/nginx/conf.d/default.conf
     depends_on:
       - php
     networks:
       - app-network
 
   php:
-    build:
-      context: ./docker/php
+    build: ./php
     container_name: php_app
     volumes:
-      - ./app:/var/www/html
-      - ./config/php/php.ini:/usr/local/etc/php/conf.d/custom.ini
+      - ./src:/var/www/html
+      - ./php/php.ini:/usr/local/etc/php/conf.d/custom.ini
     networks:
       - app-network
 
   mysql:
-    build:
-      context: ./docker/mysql
+    build: ./mysql
     container_name: mysql_app
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: appdb
-      MYSQL_USER: appuser
-      MYSQL_PASSWORD: apppass
+      MYSQL_DATABASE: app_db
+      MYSQL_USER: app_user
+      MYSQL_PASSWORD: secret
     ports:
       - "3306:3306"
     volumes:
-      - ./db_data:/var/lib/mysql
-      - ./config/mysql/my.cnf:/etc/my.cnf
+      - db_data:/var/lib/mysql
+      - ./mysql/my.cnf:/etc/my.cnf
     networks:
       - app-network
+
+volumes:
+  db_data:
 
 networks:
   app-network:
     driver: bridge
-
-volumes:
-  db_data:
