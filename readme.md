@@ -44,6 +44,7 @@ docker/
    docker compose up -d
    ```
 4. Пропиши в `hosts`:
+
    ```
    127.0.0.1 application.local
    ```
